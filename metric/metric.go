@@ -32,7 +32,7 @@ const (
 )
 
 type clientTracer struct {
-	m monitor.Monitor
+	m *monitor.Monitor
 }
 
 // Start record the beginning of an RPC invocation.
@@ -41,7 +41,7 @@ func (c *clientTracer) Start(ctx context.Context) context.Context {
 }
 
 // NewClientTracer provide tracer for client call, addr and path is the scrape_configs for prometheus server.
-func NewClientTracer(m monitor.Monitor) stats.Tracer {
+func NewClientTracer(m *monitor.Monitor) stats.Tracer {
 	m.AddMetric(&monitor.Metric{
 		Type:        monitor.Counter,
 		Name:        metricKitexClientThroughput,
@@ -76,11 +76,11 @@ func (c *clientTracer) Finish(ctx context.Context) {
 }
 
 type serverTracer struct {
-	m monitor.Monitor
+	m *monitor.Monitor
 }
 
 // NewServerTracer provides tracer for server access, addr and path is the scrape_configs for prometheus server.
-func NewServerTracer(m monitor.Monitor) stats.Tracer {
+func NewServerTracer(m *monitor.Monitor) stats.Tracer {
 	m.AddMetric(&monitor.Metric{
 		Type:        monitor.Counter,
 		Name:        metricKitexServerThroughput,

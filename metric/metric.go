@@ -71,8 +71,8 @@ func (c *clientTracer) Finish(ctx context.Context) {
 	cost := rpcFinish.Time().Sub(rpcStart.Time())
 
 	labelValues := genLabelValues(ri)
-	c.m.GetMetric(metricKitexClientThroughput).Inc(labelValues)
-	c.m.GetMetric(metricKitexClientLatencyUs).Observe(labelValues, float64(cost.Microseconds()))
+	_ = c.m.GetMetric(metricKitexClientThroughput).Inc(labelValues)
+	_ = c.m.GetMetric(metricKitexClientLatencyUs).Observe(labelValues, float64(cost.Microseconds()))
 }
 
 type serverTracer struct {
@@ -116,8 +116,8 @@ func (c *serverTracer) Finish(ctx context.Context) {
 	cost := rpcFinish.Time().Sub(rpcStart.Time())
 
 	labelValues := genLabelValues(ri)
-	c.m.GetMetric(metricKitexServerThroughput).Inc(labelValues)
-	c.m.GetMetric(metricKitexServerLatencyUs).Observe(labelValues, float64(cost.Microseconds()))
+	_ = c.m.GetMetric(metricKitexServerThroughput).Inc(labelValues)
+	_ = c.m.GetMetric(metricKitexServerLatencyUs).Observe(labelValues, float64(cost.Microseconds()))
 }
 
 // genLabelValues make labels values.
